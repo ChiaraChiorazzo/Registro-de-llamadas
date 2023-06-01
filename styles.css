@@ -95,3 +95,17 @@ body {
     background-color: #45a049;
   }
   
+  .eliminar-btn{
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: red;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+
+  .eliminar-btn:hover{
+    background-color: rgb(113, 18, 18);
+  }

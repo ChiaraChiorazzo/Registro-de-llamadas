@@ -1,6 +1,16 @@
 // Variables globales
 var medicosTableBody = document.getElementById("medicos-table-body");
 var agregarMedicoBtn = document.getElementById("agregar-medico-btn");
+var eliminarDatosBtn = document.getElementById("eliminar-datos-btn");
+
+// Obtener el input del HCO y el contenido guardado en el Local Storage
+var hcoInput = document.getElementById("hco-input");
+var hco = localStorage.getItem("hco");
+
+// Cargar el HCO guardado al cargar la página
+if (hco) {
+  hcoInput.value = hco;
+}
 
 // Función para agregar una nueva fila a la tabla
 function agregarFila() {
@@ -51,6 +61,11 @@ function agregarFila() {
   row.appendChild(comentarioCell);
 
   medicosTableBody.appendChild(row);
+
+  // Guardar el contenido de los campos de texto
+  nombreInput.addEventListener("input", guardarContenido);
+  linkInput.addEventListener("input", guardarContenido);
+  comentarioInput.addEventListener("input", guardarContenido);
 }
 
 // Función para actualizar la fecha y hora
@@ -66,10 +81,46 @@ function actualizarFechaHora() {
   }
 }
 
+// Función para guardar el contenido de los campos de texto
+function guardarContenido() {
+  var fila = this.parentNode.parentNode;
+  var contenido = {
+    nombre: fila.querySelector(".nombre-input").value,
+    link: fila.querySelector("input[type='text']:nth-child(4)").value,
+    comentario: fila.querySelector("input[type='text']:nth-child(6)").value
+  };
+
+  localStorage.setItem("contenido", JSON.stringify(contenido));
+}
+
+// Función para cargar el contenido guardado al cargar la página
+function cargarContenidoGuardado() {
+  var contenido = JSON.parse(localStorage.getItem("contenido"));
+
+  if (contenido) {
+    var fila = medicosTableBody.firstElementChild;
+    fila.querySelector(".nombre-input").value = contenido.nombre;
+    fila.querySelector("input[type='text']:nth-child(4)").value = contenido.link;
+    fila.querySelector("input[type='text']:nth-child(6)").value = contenido.comentario;
+  }
+}
+
 // Evento click para el botón "Agregar Médico"
 agregarMedicoBtn.addEventListener("click", function() {
   agregarFila();
 });
 
+// Evento click para el botón "Eliminar Datos"
+eliminarDatosBtn.addEventListener("click", function() {
+  localStorage.removeItem("contenido");
+  location.reload();
+});
+
+// Guardar el HCO al cambiar su valor
+hcoInput.addEventListener("input", function() {
+  localStorage.setItem("hco", this.value);
+});
+
 // Agregar una fila inicial al cargar la página
 agregarFila();
+cargarContenidoGuardado();

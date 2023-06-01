@@ -6,13 +6,18 @@
 </head>
 <body>
   <h1>Registro para llamadas</h1>
+  <div class="subtitle-container">
+    <label for="hco-input">HCO al que se está consultando:</label>
+    <input type="text" id="hco-input" placeholder="Ingrese HCO">
+    
+  </div>
   <table id="medicos-table">
     <thead>
       <tr>
         <th>Nombre</th>
         <th>Está según llamado</th>
         <th>No está según llamada</th>
-        <th>Se verifica en la web (link) </th>
+        <th>Se verifica en la web (link)</th>
         <th>Fecha y Hora</th>
         <th>Comentario</th>
       </tr>
@@ -21,7 +26,7 @@
     </tbody>
   </table>
   <button id="agregar-medico-btn">Agregar Médico</button>
-
+  <button class="eliminar-btn" id="eliminar-datos-btn">Eliminar Datos</button>
   <script src="app.js"></script>
 </body>
 </html>
